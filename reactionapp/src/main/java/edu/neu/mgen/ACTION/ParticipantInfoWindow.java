@@ -4,6 +4,13 @@ import javax.swing.*;
 import java.awt.*;
 
 public class ParticipantInfoWindow extends JFrame {
+    ////////////////////////////////////////////////////////////////
+    private JTextField nameField;
+    private JTextField ageField;
+    private JComboBox<String> genderComboBox;
+    private JCheckBox anagraphCheckBox;
+    ////////////////////////////////////////////////////////////////
+
     public ParticipantInfoWindow() {
         setTitle("Enter your details");
         setSize(800, 600);
@@ -77,6 +84,7 @@ public class ParticipantInfoWindow extends JFrame {
         JButton continueButton = new JButton("Continue");
         continueButton.setFont(textFont);
         continueButton.addActionListener(e -> {
+            // submitParticipantInfo();//////
             new InstructionsWindow().setVisible(true);
             dispose();
         });
@@ -84,7 +92,32 @@ public class ParticipantInfoWindow extends JFrame {
 
         // Add main panel to frame
         add(mainPanel, BorderLayout.CENTER);
+
     }
+
+    
+    //////////////////////////////////////////////////////////////
+    private void submitParticipantInfo() {
+        String name = nameField.getText();
+        int age;
+        try {
+            age = Integer.parseInt(ageField.getText());
+        } catch (NumberFormatException e) {
+            JOptionPane.showMessageDialog(this, "Please enter a valid age.");
+            return;
+        }
+        String gender = (String) genderComboBox.getSelectedItem();
+
+        // Call to database operation
+        DatabaseOperations.insertParticipant(name, age, gender);
+
+        System.out.println("submitParticipant");
+
+        // Optionally, navigate to next window or show a confirmation
+        new InstructionsWindow().setVisible(true);
+        dispose();
+    }
+    //////////////////////////////////////////////////////////////
 
     public static void main(String[] args) {
         SwingUtilities.invokeLater(() -> new ParticipantInfoWindow().setVisible(true));
