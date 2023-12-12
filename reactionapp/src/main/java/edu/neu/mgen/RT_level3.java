@@ -53,9 +53,10 @@ public class RT_level3 extends JFrame {
         round++;
         wordLabel.setText("Wait for words...");
         wordLabel.setForeground(Color.BLACK); // Ensure "Wait for words..." is black
+
         new Timer(new Random().nextInt(2000) + 1000, e -> {
             String colorWord = getRandomColorWord();
-            currentColor = getRandomColor();
+            currentColor = getRandomNonMatchingColor(colorWord); // Get a color that does not match the word
             wordLabel.setText(colorWord);
             wordLabel.setForeground(currentColor); // Set the word to a random color
             startTime = System.currentTimeMillis();
@@ -92,15 +93,25 @@ public class RT_level3 extends JFrame {
         return colorNames[new Random().nextInt(colorNames.length)];
     }
 
-    private Color getRandomColor() {
+    private Color getRandomNonMatchingColor(String colorWord) {
         Random random = new Random();
-        // Randomly select one of red, green, or blue colors
-        switch (colorNames[random.nextInt(colorNames.length)]) {
-            case "red": return Color.RED;
-            case "green": return Color.GREEN;
-            case "blue": return Color.BLUE;
-            default: return Color.BLACK;
-        }
+        Color color;
+        do {
+            switch (colorNames[random.nextInt(colorNames.length)]) {
+                case "red": color = Color.RED; break;
+                case "green": color = Color.GREEN; break;
+                case "blue": color = Color.BLUE; break;
+                default: color = Color.BLACK; break;
+            }
+        } while (colorWord.equalsIgnoreCase(colorToString(color)));
+        return color;
+    }
+
+    private String colorToString(Color color) {
+        if (Color.RED.equals(color)) return "red";
+        if (Color.GREEN.equals(color)) return "green";
+        if (Color.BLUE.equals(color)) return "blue";
+        return "unknown";
     }
 
     public static void main(String[] args) {
