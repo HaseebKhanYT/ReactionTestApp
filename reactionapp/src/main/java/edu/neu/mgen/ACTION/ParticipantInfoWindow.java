@@ -6,32 +6,87 @@ import java.awt.*;
 public class ParticipantInfoWindow extends JFrame {
     public ParticipantInfoWindow() {
         setTitle("Enter your details");
-        setSize(300, 200);
+        setSize(800, 600);
         setDefaultCloseOperation(EXIT_ON_CLOSE);
         setLocationRelativeTo(null);
 
-        setLayout(new GridLayout(5, 2));
-        add(new JLabel("Name:"));
-        JTextField nameField = new JTextField();
-        add(nameField);
+        // Main panel with GridBagLayout for flexible component placement
+        JPanel mainPanel = new JPanel(new GridBagLayout());
+        GridBagConstraints gbc = new GridBagConstraints();
 
-        add(new JLabel("Age:"));
-        JTextField ageField = new JTextField();
-        add(ageField);
+        // Insets for padding and larger font
+        Insets insets = new Insets(10, 10, 10, 10);
+        Font labelFont = new Font("Serif", Font.PLAIN, 24);
+        Font textFont = new Font("Serif", Font.PLAIN, 20);
 
-        add(new JLabel("Gender:"));
+        gbc.insets = insets;
+        gbc.fill = GridBagConstraints.HORIZONTAL;
+        gbc.gridx = 0;
+        gbc.gridy = 0;
+
+        // Name Label and Field
+        JLabel nameLabel = new JLabel("Name:");
+        nameLabel.setFont(labelFont);
+        mainPanel.add(nameLabel, gbc);
+
+        gbc.gridx = 1;
+        JTextField nameField = new JTextField(20);
+        nameField.setFont(textFont);
+        mainPanel.add(nameField, gbc);
+
+        // Age Label and Field
+        gbc.gridx = 0;
+        gbc.gridy++;
+        JLabel ageLabel = new JLabel("Age:");
+        ageLabel.setFont(labelFont);
+        mainPanel.add(ageLabel, gbc);
+
+        gbc.gridx = 1;
+        JTextField ageField = new JTextField(20);
+        ageField.setFont(textFont);
+        mainPanel.add(ageField, gbc);
+
+        // Gender Label and ComboBox
+        gbc.gridx = 0;
+        gbc.gridy++;
+        JLabel genderLabel = new JLabel("Gender:");
+        genderLabel.setFont(labelFont);
+        mainPanel.add(genderLabel, gbc);
+
+        gbc.gridx = 1;
         JComboBox<String> genderComboBox = new JComboBox<>(new String[]{"Male", "Female", "Other"});
-        add(genderComboBox);
+        genderComboBox.setFont(textFont);
+        mainPanel.add(genderComboBox, gbc);
 
-        add(new JLabel("Anagraph:"));
+        // Anagraph Label and CheckBox
+        gbc.gridx = 0;
+        gbc.gridy++;
+        JLabel anagraphLabel = new JLabel("Myopia?");
+        anagraphLabel.setFont(labelFont);
+        mainPanel.add(anagraphLabel, gbc);
+
+        gbc.gridx = 1;
         JCheckBox anagraphCheckBox = new JCheckBox();
-        add(anagraphCheckBox);
+        anagraphCheckBox.setFont(textFont);
+        mainPanel.add(anagraphCheckBox, gbc);
 
+        // Continue Button
+        gbc.gridx = 0;
+        gbc.gridy++;
+        gbc.gridwidth = 2;
         JButton continueButton = new JButton("Continue");
+        continueButton.setFont(textFont);
         continueButton.addActionListener(e -> {
             new InstructionsWindow().setVisible(true);
             dispose();
         });
-        add(continueButton);
+        mainPanel.add(continueButton, gbc);
+
+        // Add main panel to frame
+        add(mainPanel, BorderLayout.CENTER);
+    }
+
+    public static void main(String[] args) {
+        SwingUtilities.invokeLater(() -> new ParticipantInfoWindow().setVisible(true));
     }
 }

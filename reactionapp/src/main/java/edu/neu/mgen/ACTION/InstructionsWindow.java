@@ -1,13 +1,13 @@
 package edu.neu.mgen.ACTION;
 
 import java.awt.BorderLayout;
-
+import java.awt.Font; 
 import javax.swing.*;
 
 public class InstructionsWindow extends JFrame {
     public InstructionsWindow() {
         setTitle("Instructions");
-        setSize(400, 300);
+        setSize(800, 600);
         setDefaultCloseOperation(EXIT_ON_CLOSE);
         setLocationRelativeTo(null);
 
@@ -20,6 +20,7 @@ public class InstructionsWindow extends JFrame {
             "5. Try to react as fast as you can for a good score"
         );
         instructionsArea.setEditable(false);
+        instructionsArea.setFont(new Font("Arial", Font.PLAIN, 30));
 
         JButton continueButton = new JButton("Continue");
         continueButton.addActionListener(e -> {
