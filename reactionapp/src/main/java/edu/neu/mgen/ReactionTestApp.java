@@ -25,7 +25,7 @@ public class ReactionTestApp extends JFrame implements ActionListener {
     }
 
     public void actionPerformed(ActionEvent e){
-        System.out.println("clicked");
+
     }
 
 
