@@ -48,7 +48,7 @@ public class RT_level1 extends JFrame {
     private void nextRound() {
         if (round >= 5) {
             showResults();
-            System.exit(0);
+            // System.exit(0);
             return;
         }
 
@@ -94,13 +94,30 @@ public class RT_level1 extends JFrame {
     private void showResults() {
         double averageTime = (double) totalReactionTime / 5;
         double accuracy = ((double) correctResponses / 5) * 100;
-        JOptionPane.showMessageDialog(this, "Average Reaction Time: " + averageTime + " ms\nAccuracy: " + accuracy + "%");
-
-    }
-
-    public static void main(String[] args) {
-        SwingUtilities.invokeLater(() -> {
+    
+        // Create a JOptionPane with a custom message
+        JOptionPane optionPane = new JOptionPane(
+            "Average Reaction Time: " + averageTime + " ms\nAccuracy: " + accuracy + "%",
+            JOptionPane.INFORMATION_MESSAGE);
+    
+        // Create a custom "Continue" button and add an action listener to it
+        JButton continueButton = new JButton("Continue");
+        continueButton.addActionListener(e -> {
             new TestTypeSelectionWindow().setVisible(true);
+            dispose(); // Close the current window
         });
+    
+        // Set the option pane's options to include the custom button
+        optionPane.setOptions(new Object[]{continueButton});
+    
+        // Create and display the dialog
+        JDialog dialog = optionPane.createDialog(this, "Results");
+        dialog.setVisible(true);
     }
+
+    // public static void main(String[] args) {
+    //     SwingUtilities.invokeLater(() -> {
+    //         new TestTypeSelectionWindow().setVisible(true);
+    //     });
+    // }
 }

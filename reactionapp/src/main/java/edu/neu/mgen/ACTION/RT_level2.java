@@ -45,7 +45,7 @@ public class RT_level2 extends JFrame {
     private void nextRound() {
         if (round >= 5) {
             showResults();
-            System.exit(0);
+            // System.exit(0);
             return;
         }
 
@@ -73,20 +73,44 @@ public class RT_level2 extends JFrame {
         nextRound();
     }
 
+    // private void showResults() {
+    //    double averageTime = (double) totalReactionTime / 5;
+    // double accuracy = ((double) correctResponses / 5) * 100;
+    // JOptionPane.showMessageDialog(this, "Average Reaction Time: " + averageTime + " ms\nAccuracy: " + accuracy + "%");
+
+    // // Assume you have stored the user's name, age, and gender in variables
+    // String userName = "John Doe";
+    // int userAge = 30;
+    // String userGender = "Male";
+    // int testType = 1; // For example, if you have different test types
+
+    // // Insert the test data into the database
+    // DatabaseHelper.insertTestData(userName, userAge, userGender, testType, averageTime, accuracy);
+    // }
     private void showResults() {
-       double averageTime = (double) totalReactionTime / 5;
-    double accuracy = ((double) correctResponses / 5) * 100;
-    JOptionPane.showMessageDialog(this, "Average Reaction Time: " + averageTime + " ms\nAccuracy: " + accuracy + "%");
-
-    // Assume you have stored the user's name, age, and gender in variables
-    String userName = "John Doe";
-    int userAge = 30;
-    String userGender = "Male";
-    int testType = 1; // For example, if you have different test types
-
-    // Insert the test data into the database
-    DatabaseHelper.insertTestData(userName, userAge, userGender, testType, averageTime, accuracy);
+        double averageTime = (double) totalReactionTime / 5;
+        double accuracy = ((double) correctResponses / 5) * 100;
+    
+        // Create a JOptionPane with a custom message
+        JOptionPane optionPane = new JOptionPane(
+            "Average Reaction Time: " + averageTime + " ms\nAccuracy: " + accuracy + "%",
+            JOptionPane.INFORMATION_MESSAGE);
+    
+        // Create a custom "Continue" button and add an action listener to it
+        JButton continueButton = new JButton("Continue");
+        continueButton.addActionListener(e -> {
+            new TestTypeSelectionWindow().setVisible(true);
+            dispose(); // Close the current window
+        });
+    
+        // Set the option pane's options to include the custom button
+        optionPane.setOptions(new Object[]{continueButton});
+    
+        // Create and display the dialog
+        JDialog dialog = optionPane.createDialog(this, "Results");
+        dialog.setVisible(true);
     }
+    
 
     private String getRandomColorWord() {
         String[] words = {"red", "green", "blue"};
@@ -103,10 +127,10 @@ public class RT_level2 extends JFrame {
     }
    
 
-    public static void main(String[] args) {
-        SwingUtilities.invokeLater(() -> {
-            new TestTypeSelectionWindow().setVisible(true);
-        });
-    }
+    // public static void main(String[] args) {
+    //     SwingUtilities.invokeLater(() -> {
+    //         new TestTypeSelectionWindow().setVisible(true);
+    //     });
+    // }
     
 }

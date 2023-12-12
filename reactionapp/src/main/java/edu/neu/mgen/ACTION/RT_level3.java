@@ -46,7 +46,7 @@ public class RT_level3 extends JFrame {
     private void nextRound() {
         if (round >= 5) {
             showResults();
-            System.exit(0);
+            // System.exit(0);
             return;
         }
 
@@ -86,8 +86,50 @@ public class RT_level3 extends JFrame {
     private void showResults() {
         double averageTime = (double) totalReactionTime / 5;
         double accuracy = ((double) correctResponses / 5) * 100;
-        JOptionPane.showMessageDialog(this, "Average Reaction Time: " + averageTime + " ms\nAccuracy: " + accuracy + "%");
+    
+        // Create a JOptionPane with a custom message
+        JOptionPane optionPane = new JOptionPane(
+            "Average Reaction Time: " + averageTime + " ms\nAccuracy: " + accuracy + "%",
+            JOptionPane.INFORMATION_MESSAGE);
+    
+        // Create a custom "Continue" button and add an action listener to it
+        JButton continueButton = new JButton("Continue");
+        continueButton.addActionListener(e -> {
+            new TestTypeSelectionWindow().setVisible(true);
+            dispose(); // Close the current window
+        });
+    
+        // Set the option pane's options to include the custom button
+        optionPane.setOptions(new Object[]{continueButton});
+    
+        // Create and display the dialog
+        JDialog dialog = optionPane.createDialog(this, "Results");
+        dialog.setVisible(true);
     }
+
+    // private void showResults() {
+    //     double averageTime = (double) totalReactionTime / 5;
+    //     double accuracy = ((double) correctResponses / 5) * 100;
+    
+    //     // Custom "Continue" button
+    //     JButton continueButton = new JButton("Continue");
+    //     continueButton.addActionListener(e -> {
+    //         new TestTypeSelectionWindow().setVisible(true);
+    //         dispose();
+    //     });
+    
+    //     // JOptionPane with the custom button
+    //     JOptionPane.showMessageDialog(
+    //         this, 
+    //         "Average Reaction Time: " + averageTime + " ms\nAccuracy: " + accuracy + "%",
+    //         "Game Over", 
+    //         JOptionPane.INFORMATION_MESSAGE, 
+    //         null, 
+    //         new Object[]{continueButton}, 
+    //         continueButton
+    //     );
+    // }
+    
 
     private String getRandomColorWord() {
         return colorNames[new Random().nextInt(colorNames.length)];
@@ -114,9 +156,9 @@ public class RT_level3 extends JFrame {
         return "unknown";
     }
 
-    public static void main(String[] args) {
-        SwingUtilities.invokeLater(() -> {
-            new TestTypeSelectionWindow().setVisible(true);
-        });
-    }
+    // public static void main(String[] args) {
+    //     SwingUtilities.invokeLater(() -> {
+    //         new TestTypeSelectionWindow().setVisible(true);
+    //     });
+    // }
 }
